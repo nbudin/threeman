@@ -11,7 +11,8 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Runs Procfile commands in iTerm 2 tabs}
   spec.description   = %q{An alternative to Foreman for Mac users, which runs each command in a separate iTerm 2 tab}
-  spec.homepage      = "https://github.com/nbudin/threeman"
+  spec.homepage      = "https://github.com/patientslikeme/threeman"
+  spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"

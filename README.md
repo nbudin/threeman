@@ -29,5 +29,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nbudin/threeman.
+Bug reports and pull requests are welcome on GitHub at https://github.com/patientslikeme/threeman.  Contributors are expected to follow the code of conduct specified in CODE_OF_CONDUCT.md.
+
+## License
+
+Threeman is &copy; 2016 PatientsLikeMe, Inc. and is released under the MIT License.  See the LICENSE file for more information.
 
