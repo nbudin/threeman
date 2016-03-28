@@ -1,28 +1,25 @@
 # Threeman
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/threeman`. To experiment with that code, run `bin/console` for an interactive prompt.
+Threeman is an alternative to [Foreman](https://github.com/ddollar/foreman) for Mac users.  Rather than running all the commands together in one terminal, it opens a new [iTerm 2](https://www.iterm2.com) window with each command in a tab.  The benefits of this are:
 
-TODO: Delete this and the text above, and describe your gem
+* iTerm 2 will notify you using an icon when there's new output from each command
+* Because your command's input and output aren't being intercepted by Foreman, you can use [Pry](http://pryrepl.org)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Make sure you have [iTerm 2](https://www.iterm2.com/downloads.html) at least version 2.9 installed.
 
-```ruby
-gem 'threeman'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Run:
 
     $ gem install threeman
 
 ## Usage
 
-TODO: Write usage instructions here
+From your app's directory (with a Procfile in it), run:
+
+    $ threeman
+
+Threeman will open a new iTerm 2 window with each of your Procfile commands running in a separate tab.
 
 ## Development
 
@@ -32,5 +29,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/threeman.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nbudin/threeman.
 
