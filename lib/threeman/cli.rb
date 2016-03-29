@@ -1,43 +1,63 @@
-require 'foreman/procfile'
-require 'shellwords'
-require 'rb-scpt'
+require 'threeman/procfile'
 require 'thor'
 
 module Threeman
+  FRONTENDS = {
+    :iterm3 => lambda {
+      require 'threeman/frontends/iterm3'
+      Threeman::Frontends::Iterm3.new
+    },
+    :mac_terminal => lambda {
+      require 'threeman/frontends/mac_terminal'
+      Threeman::Frontends::MacTerminal.new
+    }
+  }
+
   class CLI < Thor
     default_task :start
 
     desc "start", "Start the application"
+    option :frontend
     def start
-      iterm = Appscript.app("iTerm")
-      iterm.activate
-      window = iterm.create_window_with_default_profile
-
       pwd = Dir.pwd
+      procfile = Threeman::Procfile.new(File.expand_path("Procfile", pwd))
+      commands = procfile.commands(pwd)
 
-      procfile = Foreman::Procfile.new(File.expand_path("Procfile", pwd))
-      is_first = true
-      procfile.entries do |name, command|
-        current_tab = if is_first
-          window
-        else
-          window.create_tab_with_default_profile
-        end
-
-        run_command(current_tab.current_session, name, pwd, command)
-        is_first = false
+      frontend_name = options[:frontend] || auto_frontend
+      unless frontend_name
+        puts "Couldn't determine a frontend to use.  Please specify one using --frontend."
+        print_valid_frontend_names
+        exit! 1
       end
+
+      frontend(frontend_name).run_commands(commands)
     end
 
     private
-    def run_command(session, name, workdir, command)
-      bash_script = [
-        "echo -ne \"\\033]0;#{Shellwords.escape name}\\007\"",
-        "cd #{workdir}",
-        command
-      ].join(" ; ")
+    def frontend(name)
+      frontend_lambda = FRONTENDS[name.to_sym]
+      unless frontend_lambda
+        puts "No frontend named #{name}!"
+        print_valid_frontend_names
+        exit! 1
+      end
 
-      session.write(text: "bash -c #{Shellwords.escape bash_script}")
+      frontend_lambda.call
+    end
+
+    def auto_frontend
+      if File.exist?('/Applications/iTerm.app/Contents/Info.plist')
+        iterm_version = `defaults read /Applications/iTerm.app/Contents/Info.plist CFBundleShortVersionString`
+        return :iterm3 if iterm_version >= "2.9"
+      end
+
+      if File.exist?('/Applications/Utilities/Terminal.app/Contents/Info.plist')
+        return :mac_terminal
+      end
+    end
+
+    def print_valid_frontend_names
+      puts "Valid frontend names are: #{FRONTENDS.keys.sort.join(', ')}."
     end
   end
 end
