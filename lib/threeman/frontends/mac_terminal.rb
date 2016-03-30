@@ -28,6 +28,7 @@ module Threeman
           end
 
           sleep 0.3
+          terminal_controller.keystroke("cd #{Shellwords.escape command.workdir}\n")
           terminal_controller.keystroke(bash_cmd(command) + "\n")
         end
       end

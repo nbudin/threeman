@@ -27,7 +27,9 @@ module Threeman
 
       private
       def run_command(session, command)
-        session.write(text: "bash -c #{Shellwords.escape bash_script(command)}")
+        cd_cmd = "cd #{Shellwords.escape command.workdir}"
+        bash_cmd = "bash -c #{Shellwords.escape bash_script(command)}"
+        session.write(text: [cd_cmd, bash_cmd].join("\n"))
       end
     end
   end

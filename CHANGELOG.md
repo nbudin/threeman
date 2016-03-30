@@ -1,3 +1,7 @@
+# 0.2.1 - March 30, 2016
+
+* Split cd'ing into the workdir out of the bash script, so that if the process terminates you'll wind up in the right directory
+
 # 0.2.0 - March 29, 2016
 
 * Refactor into multiple frontends

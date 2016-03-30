@@ -11,10 +11,7 @@ module Threeman
     end
 
     def bash_script
-      [
-        "cd #{workdir}",
-        command
-      ].join(" ; ")
+      command
     end
   end
 end
