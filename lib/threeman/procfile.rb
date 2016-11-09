@@ -3,11 +3,11 @@ require 'threeman/command'
 
 module Threeman
   class Procfile < Foreman::Procfile
-    def commands(workdir)
+    def commands(workdir, port)
       commands = []
 
       entries do |name, command|
-        commands << Threeman::Command.new(name, command, workdir)
+        commands << Threeman::Command.new(name, command, workdir, port)
       end
 
       commands

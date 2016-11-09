@@ -17,11 +17,12 @@ module Threeman
     default_task :start
 
     desc "start", "Start the application"
-    option :frontend
+    option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
+    option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric, default: 5000
     def start
       pwd = Dir.pwd
       procfile = Threeman::Procfile.new(File.expand_path("Procfile", pwd))
-      commands = procfile.commands(pwd)
+      commands = procfile.commands(pwd, options[:port])
 
       frontend_name = options[:frontend] || auto_frontend
       unless frontend_name
