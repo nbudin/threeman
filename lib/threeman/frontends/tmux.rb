@@ -20,10 +20,12 @@ module Threeman
       private
       def run_command(command, index)
         bash_cmd = "bash -c #{Shellwords.escape bash_script(command)}"
+
+        common_opts = "-n #{Shellwords.escape command.name} -c #{Shellwords.escape command.workdir} #{Shellwords.escape bash_cmd}"
         if index == 0
-          system "tmux new-session -d -s #{session} -c #{Shellwords.escape command.workdir} #{Shellwords.escape bash_cmd}"
+          system "tmux new-session -d -s #{session} #{common_opts}"
         else
-          system "tmux -v new-window -t #{session}:#{index} -c #{Shellwords.escape command.workdir} #{Shellwords.escape bash_cmd}"
+          system "tmux -v new-window -t #{session}:#{index} #{common_opts}"
         end
       end
     end
