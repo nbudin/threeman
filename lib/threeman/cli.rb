@@ -10,6 +10,10 @@ module Threeman
     :mac_terminal => lambda {
       require 'threeman/frontends/mac_terminal'
       Threeman::Frontends::MacTerminal.new
+    },
+    :tmux => lambda {
+      require 'threeman/frontends/tmux'
+      Threeman::Frontends::Tmux.new
     }
   }
 
