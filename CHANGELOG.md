@@ -1,3 +1,8 @@
+# 0.3.0 - November 11, 2016
+
+* Support tmux!  (Thanks @sagotsky for his help.)
+* Set the PORT environment variable
+
 # 0.2.1 - March 30, 2016
 
 * Split cd'ing into the workdir out of the bash script, so that if the process terminates you'll wind up in the right directory
