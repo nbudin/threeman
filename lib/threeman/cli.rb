@@ -59,6 +59,11 @@ module Threeman
       if File.exist?('/Applications/Utilities/Terminal.app/Contents/Info.plist')
         return :mac_terminal
       end
+
+      `which tmux`
+      if $?.success?
+        return :tmux
+      end
     end
 
     def print_valid_frontend_names
