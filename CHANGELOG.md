@@ -1,3 +1,7 @@
+# 0.3.1 - November 13, 2016
+
+* Fix a bug in setting the PORT environment variable (it has to be separately set before using it)
+
 # 0.3.0 - November 11, 2016
 
 * Support tmux!  (Thanks @sagotsky for his help.)

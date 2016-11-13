@@ -12,7 +12,7 @@ module Threeman
     end
 
     def bash_script
-      "PORT=#{port} #{command}"
+      "export PORT=#{port} ; #{command}"
     end
   end
 end
