@@ -1,3 +1,7 @@
+# 0.4.0 - March 18, 2017
+
+* Support reading .threeman or .foreman files to get the default options
+
 # 0.3.1 - November 13, 2016
 
 * Fix a bug in setting the PORT environment variable (it has to be separately set before using it)
