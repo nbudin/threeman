@@ -9,7 +9,7 @@ module Threeman
         @session = "threeman_#{Time.now.to_i}"
       end
 
-      def run_commands(commands)
+      def run_commands(commands, _panes)
         commands.each_with_index do |command, index|
           run_command(command, index)
         end
