@@ -1,5 +1,6 @@
 require 'threeman/procfile'
 require 'thor'
+require 'yaml'
 
 module Threeman
   FRONTENDS = {
@@ -22,13 +23,13 @@ module Threeman
 
     desc "start", "Start the application"
     option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
-    option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric, default: 5000
     option :panes, desc: "Runs each command in a pane, only supported in iterm2", type: :array
+    option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric
 
     def start
       pwd = Dir.pwd
       procfile = Threeman::Procfile.new(File.expand_path("Procfile", pwd))
-      commands = procfile.commands(pwd, options[:port])
+      commands = procfile.commands(pwd, options[:port] || 5000)
 
       frontend_name = options[:frontend] || auto_frontend
       unless frontend_name
@@ -70,6 +71,18 @@ module Threeman
 
     def print_valid_frontend_names
       puts "Valid frontend names are: #{FRONTENDS.keys.sort.join(', ')}."
+    end
+
+    # Cribbed mostly from Foreman
+    def options
+      original_options = super
+      return original_options unless dotfile
+      defaults = ::YAML::load_file(dotfile) || {}
+      Thor::CoreExt::HashWithIndifferentAccess.new(defaults.merge(original_options))
+    end
+
+    def dotfile
+      @dotfile ||= ['.threeman', '.foreman'].find { |filename| File.file?(filename) }
     end
   end
 end

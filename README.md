@@ -26,6 +26,14 @@ From your app's directory (with a Procfile in it), run:
 
 Threeman will open a new terminal window with each of your Procfile commands running in a separate tab.
 
+Threeman also supports reading a `.threeman` or `.foreman` file containing default options in YAML format, just like Foreman does with the `.foreman` file.  For example, a `.foreman` file containing:
+
+```
+port: 3000
+```
+
+will cause Threeman to run the app with the `PORT` environment variable set to 3000.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -38,5 +46,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/patien
 
 ## License
 
-Threeman is &copy; 2016 PatientsLikeMe, Inc. and is released under the MIT License.  See the LICENSE file for more information.
+Threeman is &copy; 2016-2017 PatientsLikeMe, Inc. and is released under the MIT License.  See the LICENSE file for more information.
 
