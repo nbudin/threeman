@@ -18,5 +18,13 @@ module Threeman
         command.bash_script
       ].join(" ; ")
     end
+
+    def sort_commands(commands)
+      commands.sort_by { |c| paned_command_names.include?(c.name) ? 0 : 1 }
+    end
+
+    def paned_command_names
+      options[:panes] || []
+    end
   end
 end

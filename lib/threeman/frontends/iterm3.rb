@@ -14,10 +14,7 @@ module Threeman
         iterm.activate
         window = iterm.create_window_with_default_profile
 
-        paned_command_names = options[:panes] || []
-        sorted_commands = commands.sort_by { |c| paned_command_names.include?(c.name) ? 0 : 1 }
-
-        sorted_commands.each_with_index do |command, index|
+        sort_commands(commands).each_with_index do |command, index|
           current_tab = if index == 0
             window
           elsif paned_command_names.include?(command.name)

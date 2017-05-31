@@ -11,7 +11,7 @@ module Threeman
       end
 
       def run_commands(commands)
-        commands.each_with_index do |command, index|
+        sort_commands(commands).each_with_index do |command, index|
           run_command(command, index)
         end
 
@@ -22,11 +22,15 @@ module Threeman
       def run_command(command, index)
         bash_cmd = "bash -c #{Shellwords.escape bash_script(command)}"
 
-        common_opts = "-n #{Shellwords.escape command.name} -c #{Shellwords.escape command.workdir} #{Shellwords.escape bash_cmd}"
+        name_opt = "-n #{Shellwords.escape command.name}"
+        common_opts = "-c #{Shellwords.escape command.workdir} #{Shellwords.escape bash_cmd}"
         if index == 0
-          system "tmux new-session -d -s #{session} #{common_opts}"
+          system "tmux new-session -d -s #{session} #{name_opt} #{common_opts}"
+        elsif paned_command_names.include?(command.name)
+          percentage = (100 / paned_command_names.size).to_i
+          system "tmux split-window -v -d -f -p #{percentage} -t #{session}:0 #{common_opts}"
         else
-          system "tmux -v new-window -t #{session}:#{index} #{common_opts}"
+          system "tmux -v new-window -t #{session}:#{index} #{name_opt} #{common_opts}"
         end
       end
     end
