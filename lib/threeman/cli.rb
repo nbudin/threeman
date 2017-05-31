@@ -23,7 +23,7 @@ module Threeman
     desc "start", "Start the application"
     option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
     option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric, default: 5000
-    option :panes, desc: "Runs each command in a pane, only supported in iterm2", type: :string
+    option :panes, desc: "Runs each command in a pane, only supported in iterm2", type: :array
 
     def start
       pwd = Dir.pwd

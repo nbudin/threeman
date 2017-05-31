@@ -14,10 +14,13 @@ module Threeman
         iterm.activate
         window = iterm.create_window_with_default_profile
 
-        commands.each_with_index do |command, index|
+        paned_command_names = options[:panes] || []
+        sorted_commands = commands.sort_by { |c| paned_command_names.include?(c.name) ? 0 : 1 }
+
+        sorted_commands.each_with_index do |command, index|
           current_tab = if index == 0
             window
-          elsif options[:panes]
+          elsif paned_command_names.include?(command.name)
             tab = window.current_session.split_horizontally_with_same_profile
             tab.select
             window
