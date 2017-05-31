@@ -2,6 +2,12 @@ require 'shellwords'
 
 module Threeman
   class Frontend
+    attr_reader :options
+
+    def initialize(options)
+      @options = options
+    end
+
     def run_commands(commands)
       raise "Subclasses must implement #run_commands"
     end

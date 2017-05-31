@@ -3,17 +3,17 @@ require 'thor'
 
 module Threeman
   FRONTENDS = {
-    :iterm3 => lambda {
+    :iterm3 => lambda { |options|
       require 'threeman/frontends/iterm3'
-      Threeman::Frontends::Iterm3.new
+      Threeman::Frontends::Iterm3.new(options)
     },
-    :mac_terminal => lambda {
+    :mac_terminal => lambda { |options|
       require 'threeman/frontends/mac_terminal'
-      Threeman::Frontends::MacTerminal.new
+      Threeman::Frontends::MacTerminal.new(options)
     },
-    :tmux => lambda {
+    :tmux => lambda { |options|
       require 'threeman/frontends/tmux'
-      Threeman::Frontends::Tmux.new
+      Threeman::Frontends::Tmux.new(options)
     }
   }
 
@@ -37,11 +37,11 @@ module Threeman
         exit! 1
       end
 
-      frontend(frontend_name).run_commands(commands, options[:panes])
+      frontend(frontend_name, options).run_commands(commands)
     end
 
     private
-    def frontend(name)
+    def frontend(name, options = {})
       frontend_lambda = FRONTENDS[name.to_sym]
       unless frontend_lambda
         puts "No frontend named #{name}!"
@@ -49,7 +49,7 @@ module Threeman
         exit! 1
       end
 
-      frontend_lambda.call
+      frontend_lambda.call(options)
     end
 
     def auto_frontend

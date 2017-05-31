@@ -9,7 +9,7 @@ end
 module Threeman
   module Frontends
     class Iterm3 < Threeman::Frontend
-      def run_commands(commands, use_panes)
+      def run_commands(commands)
         iterm = Appscript.app("iTerm")
         iterm.activate
         window = iterm.create_window_with_default_profile
@@ -17,7 +17,7 @@ module Threeman
         commands.each_with_index do |command, index|
           current_tab = if index == 0
             window
-          elsif use_panes
+          elsif options[:panes]
             tab = window.current_session.split_horizontally_with_same_profile
             tab.select
             window

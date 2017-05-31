@@ -9,7 +9,7 @@ end
 module Threeman
   module Frontends
     class MacTerminal < Threeman::Frontend
-      def run_commands(commands, _panes)
+      def run_commands(commands)
         events = Appscript.app("System Events")
 
         terminal = Appscript.app("Terminal")
