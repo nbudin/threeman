@@ -27,11 +27,15 @@ module Threeman
         if index == 0
           system "tmux new-session -d -s #{session} #{name_opt} #{common_opts}"
         elsif paned_command_names.include?(command.name)
-          percentage = (100 / paned_command_names.size).to_i
-          system "tmux split-window -v -d -f -p #{percentage} -t #{session}:0 #{common_opts}"
+          system "tmux split-window -v -d -f -t #{session}:0.#{index - 1} #{common_opts}"
+          system "tmux select-layout -t #{session}:0 #{layout_name}"
         else
           system "tmux -v new-window -t #{session}:#{index} #{name_opt} #{common_opts}"
         end
+      end
+
+      def layout_name
+        options[:layout_name] || 'tiled'
       end
     end
   end
