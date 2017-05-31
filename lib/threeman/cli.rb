@@ -4,17 +4,17 @@ require 'yaml'
 
 module Threeman
   FRONTENDS = {
-    :iterm3 => lambda {
+    :iterm3 => lambda { |options|
       require 'threeman/frontends/iterm3'
-      Threeman::Frontends::Iterm3.new
+      Threeman::Frontends::Iterm3.new(options)
     },
-    :mac_terminal => lambda {
+    :mac_terminal => lambda { |options|
       require 'threeman/frontends/mac_terminal'
-      Threeman::Frontends::MacTerminal.new
+      Threeman::Frontends::MacTerminal.new(options)
     },
-    :tmux => lambda {
+    :tmux => lambda { |options|
       require 'threeman/frontends/tmux'
-      Threeman::Frontends::Tmux.new
+      Threeman::Frontends::Tmux.new(options)
     }
   }
 
@@ -23,7 +23,10 @@ module Threeman
 
     desc "start", "Start the application"
     option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
+    option :panes, desc: "Runs each command in a pane, if supported by the frontend.  (Currently supported in iterm3 and tmux.)", type: :array
     option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric
+    option :layout_name, desc: "If using tmux, the layout name to use for paned commands", type: :string
+
     def start
       pwd = Dir.pwd
       procfile = Threeman::Procfile.new(File.expand_path("Procfile", pwd))
@@ -36,11 +39,11 @@ module Threeman
         exit! 1
       end
 
-      frontend(frontend_name).run_commands(commands)
+      frontend(frontend_name, options).run_commands(commands)
     end
 
     private
-    def frontend(name)
+    def frontend(name, options = {})
       frontend_lambda = FRONTENDS[name.to_sym]
       unless frontend_lambda
         puts "No frontend named #{name}!"
@@ -48,7 +51,7 @@ module Threeman
         exit! 1
       end
 
-      frontend_lambda.call
+      frontend_lambda.call(options)
     end
 
     def auto_frontend

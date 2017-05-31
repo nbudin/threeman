@@ -1,3 +1,7 @@
+# 0.5.0 - May 31, 2017
+
+* Adds `--panes=command_name command_two` to run certain commands in panes
+
 # 0.4.0 - March 18, 2017
 
 * Support reading .threeman or .foreman files to get the default options

@@ -14,8 +14,12 @@ module Threeman
         iterm.activate
         window = iterm.create_window_with_default_profile
 
-        commands.each_with_index do |command, index|
+        sort_commands(commands).each_with_index do |command, index|
           current_tab = if index == 0
+            window
+          elsif paned_command_names.include?(command.name)
+            tab = window.current_session.split_horizontally_with_same_profile
+            tab.select
             window
           else
             window.create_tab_with_default_profile
