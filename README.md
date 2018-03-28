@@ -9,6 +9,7 @@ Threeman also has an extensible architecture to allow it to support multiple ter
 
 * iTerm 2.9 and above
 * Mac OS X's built-in Terminal app
+* tmux
 
 ## Installation
 
