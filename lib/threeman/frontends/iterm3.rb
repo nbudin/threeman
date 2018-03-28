@@ -12,7 +12,7 @@ module Threeman
       def run_commands(commands)
         iterm = Appscript.app("iTerm")
         iterm.activate
-        window = iterm.create_window_with_default_profile
+        window = open_option(iterm)
 
         sort_commands(commands).each_with_index do |command, index|
           current_tab = if index == 0
@@ -34,6 +34,21 @@ module Threeman
         cd_cmd = "cd #{Shellwords.escape command.workdir}"
         bash_cmd = "bash -c #{Shellwords.escape bash_script(command)}"
         session.write(text: [cd_cmd, bash_cmd].join("\n"))
+      end
+
+      def open_option(iterm)
+        if options[:open_in_new_tab]
+          begin
+            current_window = iterm.current_window
+          rescue Appscript::CommandError
+            puts "Cannot open in new iterm tab because there is no existing iterm window"
+            exit! 1
+          end
+          current_window.create_tab_with_default_profile
+          current_window
+        else
+          iterm.create_window_with_default_profile
+        end
       end
     end
   end

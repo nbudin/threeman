@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nat Budin"]
   spec.email         = ["nbudin@patientslikeme.com"]
 
-  spec.summary       = %q{Runs Procfile commands in iTerm 2 tabs}
-  spec.description   = %q{An alternative to Foreman for Mac users, which runs each command in a separate iTerm 2 tab}
+  spec.summary       = %q{Runs Procfile commands in tabs}
+  spec.description   = %q{An alternative to Foreman for Mac users, which runs each command in a separate tab}
   spec.homepage      = "https://github.com/patientslikeme/threeman"
   spec.license       = "MIT"
 
