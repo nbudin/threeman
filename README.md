@@ -1,6 +1,6 @@
 # Threeman
 
-Threeman is an alternative to [Foreman](https://github.com/ddollar/foreman).  Rather than running all the commands together in one terminal, it opens a new terminal window with each command in a tab.  The benefits of this are:
+Threeman is an alternative to [Foreman](https://github.com/ddollar/foreman).  Rather than running all the commands together in one terminal, it opens a tab for each command.  The benefits of this are:
 
 * Your terminal app will notify you using an icon when there's new output from each command
 * Because your command's input and output aren't being intercepted by Foreman, you can use [Pry](http://pryrepl.org)

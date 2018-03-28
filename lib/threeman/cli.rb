@@ -23,9 +23,22 @@ module Threeman
 
     desc "start", "Start the application"
     option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
-    option :panes, desc: "Runs each command in a pane, if supported by the frontend.  (Currently supported in iterm3 and tmux.)", type: :array
-    option :port, desc: "The port to run the application on.  This will set the PORT environment variable.", type: :numeric
     option :layout_name, desc: "If using tmux, the layout name to use for paned commands", type: :string
+    option(
+      :open_in_new_tab,
+      desc: "If using iterm3, configure how threeman opens",
+      type: :boolean
+    )
+    option(
+      :panes,
+      desc: "Runs each command in a pane, if supported by the frontend.  (Currently supported in iterm3 and tmux.)",
+      type: :array
+    )
+    option(
+      :port,
+      desc: "The port to run the application on.  This will set the PORT environment variable.",
+      type: :numeric
+    )
 
     def start
       pwd = Dir.pwd
@@ -39,10 +52,19 @@ module Threeman
         exit! 1
       end
 
+      valid_frontend_open_option(frontend_name) if options[:open_in_new_tab]
+
       frontend(frontend_name, options).run_commands(commands)
     end
 
     private
+    def valid_frontend_open_option(frontend_name)
+      unless frontend_name == :iterm3
+        puts "Opening in a new tab is only supported for iterm3"
+        exit! 1
+      end
+    end
+
     def frontend(name, options = {})
       frontend_lambda = FRONTENDS[name.to_sym]
       unless frontend_lambda
