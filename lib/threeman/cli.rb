@@ -52,13 +52,13 @@ module Threeman
         exit! 1
       end
 
-      valid_frontend_open_option(frontend_name) if options[:open_in_new_tab]
+      valid_frontend_open_option?(frontend_name) if options[:open_in_new_tab]
 
       frontend(frontend_name, options).run_commands(commands)
     end
 
     private
-    def valid_frontend_open_option(frontend_name)
+    def valid_frontend_open_option?(frontend_name)
       unless frontend_name == :iterm3
         puts "Opening in a new tab is only supported for iterm3"
         exit! 1

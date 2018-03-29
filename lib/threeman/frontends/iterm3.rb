@@ -38,12 +38,7 @@ module Threeman
 
       def open_option(iterm)
         if options[:open_in_new_tab]
-          begin
-            current_window = iterm.current_window
-          rescue Appscript::CommandError
-            puts "Cannot open in new iterm tab because there is no existing iterm window"
-            exit! 1
-          end
+          current_window = iterm.current_window
           current_window.create_tab_with_default_profile
           current_window
         else
