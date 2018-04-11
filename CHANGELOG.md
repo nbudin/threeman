@@ -1,3 +1,7 @@
+# 0.6.0 - March 29, 2018
+
+* Adds `--open-in-new-tab` start option to allow threeman to open tabs in existing window versus opening a new window.
+
 # 0.5.0 - May 31, 2017
 
 * Adds `--panes=command_name command_two` to run certain commands in panes
