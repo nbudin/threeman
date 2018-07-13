@@ -24,6 +24,7 @@ module Threeman
     desc "start", "Start the application"
     option :frontend, desc: "Which frontend to use.  One of: #{FRONTENDS.keys.sort.join(', ')}"
     option :layout_name, desc: "If using tmux, the layout name to use for paned commands", type: :string
+    option :procfile, desc: "Procfile file name", default: "Procfile", aliases: "-f"
     option(
       :open_in_new_tab,
       desc: "If using iterm3, configure how threeman opens",
@@ -41,8 +42,9 @@ module Threeman
     )
 
     def start
+      procfile_name = options[:procfile]
       pwd = Dir.pwd
-      procfile = Threeman::Procfile.new(File.expand_path("Procfile", pwd))
+      procfile = Threeman::Procfile.new(File.expand_path(procfile_name, pwd))
       commands = procfile.commands(pwd, options[:port] || 5000)
 
       frontend_name = options[:frontend] || auto_frontend
