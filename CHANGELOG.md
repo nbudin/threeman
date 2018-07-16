@@ -1,3 +1,7 @@
+# 0.7.0 - July 16, 2018
+
+* Support `--procfile` and `--root` options just like Foreman does
+
 # 0.6.0 - March 29, 2018
 
 * Adds `--open-in-new-tab` start option to allow threeman to open tabs in existing window versus opening a new window.
