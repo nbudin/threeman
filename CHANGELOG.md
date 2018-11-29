@@ -1,3 +1,7 @@
+# 0.8.0 - November 29, 2018
+
+* Add a `--command-prefix` option, which will make this easier to use in Docker Compose setups
+
 # 0.7.0 - July 16, 2018
 
 * Support `--procfile` and `--root` options just like Foreman does

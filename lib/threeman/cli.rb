@@ -41,12 +41,17 @@ module Threeman
       desc: "The port to run the application on.  This will set the PORT environment variable.",
       type: :numeric
     )
+    option(
+      :command_prefix,
+      desc: "If specified, prefix each command in Procfile with this string",
+      type: :string
+    )
 
     def start
       procfile_name = options[:procfile]
       pwd = options[:root] || Dir.pwd
       procfile = Threeman::Procfile.new(File.expand_path(procfile_name, pwd))
-      commands = procfile.commands(pwd, options[:port] || 5000)
+      commands = procfile.commands(pwd, options[:port] || 5000, options[:command_prefix])
 
       frontend_name = options[:frontend] || auto_frontend
       unless frontend_name
