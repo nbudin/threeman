@@ -1,3 +1,7 @@
+# 0.9.0 - March 1, 2019
+
+* Support Foreman's `--formation` (or `-m`) option
+
 # 0.8.0 - November 29, 2018
 
 * Add a `--command-prefix` option, which will make this easier to use in Docker Compose setups
