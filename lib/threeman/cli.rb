@@ -26,6 +26,7 @@ module Threeman
     option :layout_name, desc: "If using tmux, the layout name to use for paned commands", type: :string
     option :procfile, desc: "Procfile file name", default: "Procfile", aliases: "-f"
     option :root, desc: "Directory of Procfile", aliases: "-d"
+    option :formation, aliases: '-m'
     option(
       :open_in_new_tab,
       desc: "If using iterm3, configure how threeman opens",
@@ -51,7 +52,8 @@ module Threeman
       procfile_name = options[:procfile]
       pwd = options[:root] || Dir.pwd
       procfile = Threeman::Procfile.new(File.expand_path(procfile_name, pwd))
-      commands = procfile.commands(pwd, options[:port] || 5000, options[:command_prefix])
+      formation = parse_formation(options[:formation])
+      commands = procfile.commands(pwd, options[:port] || 5000, options[:command_prefix], formation)
 
       frontend_name = options[:frontend] || auto_frontend
       unless frontend_name
@@ -114,6 +116,16 @@ module Threeman
 
     def dotfile
       @dotfile ||= ['.threeman', '.foreman'].find { |filename| File.file?(filename) }
+    end
+
+    def parse_formation(formation)
+      pairs = formation.to_s.gsub(/\s/, "").split(",")
+
+      pairs.inject(Hash.new(0)) do |ax, pair|
+        process, amount = pair.split("=")
+        process == "all" ? ax.default = amount.to_i : ax[process] = amount.to_i
+        ax
+      end
     end
   end
 end
