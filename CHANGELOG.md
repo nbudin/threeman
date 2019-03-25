@@ -1,3 +1,7 @@
+# 0.9.1 - March 25, 2019
+
+* Bug fix: add default formation of all=1 to restore previous behavior if formation isn't passed
+
 # 0.9.0 - March 1, 2019
 
 * Support Foreman's `--formation` (or `-m`) option
