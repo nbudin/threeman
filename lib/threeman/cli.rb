@@ -26,7 +26,7 @@ module Threeman
     option :layout_name, desc: "If using tmux, the layout name to use for paned commands", type: :string
     option :procfile, desc: "Procfile file name", default: "Procfile", aliases: "-f"
     option :root, desc: "Directory of Procfile", aliases: "-d"
-    option :formation, aliases: '-m'
+    option :formation, aliases: '-m', default: "all=1"
     option(
       :open_in_new_tab,
       desc: "If using iterm3, configure how threeman opens",
