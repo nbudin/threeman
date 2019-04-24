@@ -1,3 +1,7 @@
+# 0.9.2 - April 24, 2019
+
+* Bug fix for my bug fix: don't allow 0.9.1's bug fix to prevent specifying formation in a dotfile
+
 # 0.9.1 - March 25, 2019
 
 * Bug fix: add default formation of all=1 to restore previous behavior if formation isn't passed
