@@ -1,3 +1,7 @@
+# 0.9.3 - Mar 3, 2020
+
+* Upgrading rake to address CVE-2020-8130
+
 # 0.9.2 - April 24, 2019
 
 * Bug fix for my bug fix: don't allow 0.9.1's bug fix to prevent specifying formation in a dotfile
